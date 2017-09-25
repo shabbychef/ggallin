@@ -32,59 +32,78 @@
 	xeql
 }
 
-#' @title geom_cloud .
+#' @title geom_cloud 
 #'
 #' @description 
 #'
-#' One sentence or so that tells you some more.
+#' Draw a normal uncertainty cloud as a ribbon
+#'
+#' Draws overlapping ribbons of the same identity to create 
+#' a cloud of (Gaussian) uncertainty. Similar to an errorbar geom in
+#' use, but visually less distracting (sometimes).
+#'
+#' @section Aesthetics:
+#' \code{geom_cloud} understands the following aesthetics (required aesthetics
+#' are in bold):
+#' \itemize{
+#'   \item \strong{\code{x}}
+#'   \item \strong{\code{y}}
+#'   \item \strong{\code{ymin}}
+#'   \item \strong{\code{ymax}}
+#'   \item \code{fill}
+#' }
+#' Only one of \code{ymin} and \code{ymax} is strictly required.
 #'
 #' @details
 #'
-#' Really detailed. \eqn{\zeta}{zeta}.
+#' Assumes that \code{ymin} and \code{ymax} are plotted at a 
+#' fixed number of standard errors away from \code{y}, then computes
+#' a Gaussian density with that standard deviation, plotting a cloud
+#' (based on \code{geom_ribbon}) with alpha proportional to the density.
+#' This appears as a vertical \sQuote{cloud} of uncertainty. In use,
+#' this geom should be comparable to \code{geom_errorbar}.
 #'
-#' A list:
-#' \itemize{
-#' \item I use \eqn{n}{n} to stand for blah.
-#' \item and so forth....
-#' }
+#' @inheritParams ggplot2::geom_ribbon
+#' @param steps The integer number of steps, or equivalently, the number of
+#'        overlapping ribbons. A larger number makes a smoother cloud
+#'        at the possible expense of rendering time. Values larger than
+#'        around 20 are typically not necessary.
+#' @param max_alpha The maximum alpha at the maximum density. The cloud
+#'        will have alpha no greater than this value.
+#' @param se_mult The \sQuote{multiplier} of standard errors of the given
+#'        \code{ymin} and \code{ymax}. If these are at one standard error,
+#'        then let \code{se_mult} take the default value of 1.
 #'
-#' @usage
-#'
-#' geom_cloud(x, n, zeta, ...)
-#'
-#' @param x vector of blah
-#' @param n number of blah
-#' @param ... arguments passed on to ...
-#' @inheritParams dt
-#' @inheritParams same_package_function
-#' @inheritParams anotherPackage::function
-#' @template param-ope
-#' @return \code{dsr} gives the density, \code{psr} gives the distribution function,
-#' \code{qsr} gives the quantile function, and \code{rsr} generates random deviates.
-#'
-#' Invalid arguments will result in return value \code{NaN} with a warning.
-#' @keywords distribution 
-#' @keywords io
 #' @keywords plotting
-#' @aliases psr qsr rsr
-#' @seealso t-distribution functions, \code{\link{dt}, \link{pt}, \link{qt}, \link{rt}}
+#'
+#' @seealso
+#'  \code{\link[ggplot2]{geom_ribbon}}: The underlying geom
 #' @note
-#' This is a thin wrapper on the t distribution. 
-#' @template etc
-#' @template sr
-#' @template R
-#' @references
-#'
-#' Johnson, N. L., and Welch, B. L. "Applications of the non-central t-distribution."
-#' Biometrika 31, no. 3-4 (1940): 362-389. \url{http://dx.doi.org/10.1093/biomet/31.3-4.362}
-#'
-#' @examples 
-#' y <- geom_cloud(20, 10)
-#' \dontrun{
-#' y <- geom_cloud(20, 10)
-#' }
+#' This is a thin wrapper on the \code{geom_ribbon} geom.
 #' @author Steven E. Pav \email{steven@@gilgamath.com}
 #' @export
+#' @examples
+#' set.seed(2134)
+#' nobs <- 200
+#' mydat <- data.frame(grp=sample(c(0,1),nobs,replace=TRUE),
+#'   colfac=sample(letters[1:2],nobs,replace=TRUE),
+#'   rowfac=sample(letters[10 + (1:3)],nobs,replace=TRUE)) 
+#' mydat$x <- seq(0,1,length.out=nobs) + 0.33 * mydat$grp
+#' mydat$y <- 0.25 * rnorm(nobs) + 2 * mydat$grp) 
+#' mydat$grp <- factor(mydat$grp)
+#' mydat$se  <- sqrt(x)
+#'
+#' ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,color=grp)) +
+#' facet_grid(rowfac ~ colfac) + 
+#' geom_line() + 
+#' geom_errorbar() + 
+#' labs(title='uncertainty by errorbar')
+#'
+#' ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,fill=grp)) +
+#' facet_grid(rowfac ~ colfac) + 
+#' geom_line() + 
+#' geom_cloud(steps=15,max_alpha=0.85) +
+#' labs(title='uncertainty by cloudr')
 library(ggplot2)
 library(grid)
 
@@ -111,6 +130,12 @@ geom_cloud <- function(mapping = NULL, data = NULL, ...,
 }
 
 
+#' Geom Proto
+#' @rdname geom_cloud
+#' @format NULL
+#' @usage NULL
+#' @keywords internal
+#' @export
 GeomCloud <- ggproto("GeomCloud", Geom,
   required_aes = c("x", "y", "ymin", "ymax"),
   non_missing_aes = c("fill"),
