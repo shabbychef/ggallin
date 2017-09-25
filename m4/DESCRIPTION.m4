@@ -12,14 +12,15 @@ Date: DATE()
 License: LGPL-3
 Title: Fast Robust Moments
 BugReports: https://github.com/shabbychef/PKG_NAME()/issues
-Description: Fast computation of moments via 'Rcpp'. Supports computation on
-   vectors and matrices, and Monoidal append of moments.
+Description: Extra geoms and scales for ggplot2.
 Depends:
-		ggplot2 (>= 2.2.1),
-		scales (>= 0.4.0)
+  ggplot2 (>= 2.2.1)
 Suggests:
-    knitr,
-    testthat
+  knitr,
+  testthat
+Imports:
+  scales,
+  grid
 RoxygenNote: 5.0.1
 URL: https://github.com/shabbychef/PKG_NAME()
 VignetteBuilder: knitr

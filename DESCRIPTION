@@ -8,20 +8,17 @@ Date: 2017-09-24
 License: LGPL-3
 Title: Fast Robust Moments
 BugReports: https://github.com/shabbychef/ggallin/issues
-Description: Fast computation of moments via 'Rcpp'. Supports computation on
-   vectors and matrices, and Monoidal append of moments.
-Imports:
-    Rcpp (>= 0.12.3),
-    methods
-LinkingTo: Rcpp
+Description: Extra geoms and scales for ggplot2.
+Depends:
+  ggplot2 (>= 2.2.1)
 Suggests:
-    knitr,
-    testthat,
-    moments,
-    PDQutils,
-    microbenchmark
+  knitr,
+  testthat
+Imports:
+  scales,
+  grid
 RoxygenNote: 5.0.1
 URL: https://github.com/shabbychef/ggallin
 VignetteBuilder: knitr
 Collate:
-
+    'geom_cloud.R'
