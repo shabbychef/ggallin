@@ -23,28 +23,11 @@
 #'
 #'
 #' @param ... arguments passed on to ...
-#' @inheritParams dt
-#' @inheritParams same_package_function
-#' @inheritParams anotherPackage::function
-#' @template param-ope
-#' @return \code{dsr} gives the density, \code{psr} gives the distribution function,
-#' \code{qsr} gives the quantile function, and \code{rsr} generates random deviates.
-#'
 #' Invalid arguments will result in return value \code{NaN} with a warning.
-#' @keywords distribution 
-#' @keywords io
 #' @keywords plotting
-#' @aliases psr qsr rsr
-#' @seealso t-distribution functions, \code{\link{dt}, \link{pt}, \link{qt}, \link{rt}}
-#' @note
-#' This is a thin wrapper on the t distribution. 
-#' @template etc
-#' @template sr
-#' @template R
-#' @references
-#'
-#' Johnson, N. L., and Welch, B. L. "Applications of the non-central t-distribution."
-#' Biometrika 31, no. 3-4 (1940): 362-389. \url{http://dx.doi.org/10.1093/biomet/31.3-4.362}
+#' @seealso ...
+#' @return 
+#' foo
 #'
 #' @examples 
 #' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + geom_point() + scale_x_continuous(trans=ssqrt_trans)
@@ -64,7 +47,7 @@ ssqrt_trans <- scales::trans_new(name      = 'signed square root',
 																 inverse   = function(y) sign(y) * y^2,
 																 domain    = c(-Inf,Inf))
 
-#' http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/
+#' @seealso \url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}
 #' @export
 #' @rdname transforms
 pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',

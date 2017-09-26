@@ -17,7 +17,7 @@ Suggests:
 Imports:
   scales,
   grid
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 URL: https://github.com/shabbychef/ggallin
 VignetteBuilder: knitr
 Collate:

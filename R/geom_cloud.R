@@ -82,6 +82,8 @@
 #' This is a thin wrapper on the \code{geom_ribbon} geom.
 #' @author Steven E. Pav \email{steven@@gilgamath.com}
 #' @export
+#' @name geom_cloud
+#' @rdname geom_cloud
 #' @examples
 #' set.seed(2134)
 #' nobs <- 200
