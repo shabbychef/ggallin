@@ -59,9 +59,9 @@ mydat <- data.frame(grp=sample(c(0,1),nobs,replace=TRUE),
   colfac=sample(letters[1:2],nobs,replace=TRUE),
   rowfac=sample(letters[10 + (1:3)],nobs,replace=TRUE)) 
 mydat$x <- seq(0,1,length.out=nobs) + 0.33 * mydat$grp
-mydat$y <- 0.25 * rnorm(nobs) + 2 * mydat$grp) 
+mydat$y <- 0.25 * rnorm(nobs) + 2 * mydat$grp
 mydat$grp <- factor(mydat$grp)
-mydat$se  <- sqrt(x)
+mydat$se  <- sqrt(mydat$x)
 
 ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,color=grp)) +
 facet_grid(rowfac ~ colfac) + 
