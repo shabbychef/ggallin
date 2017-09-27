@@ -39,7 +39,9 @@
 #' A scale transformation object.
 #'
 #' @examples 
-#' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + geom_point() + scale_x_continuous(trans=ssqrt_trans)
+#' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+#'   geom_point() + 
+#'   scale_x_continuous(trans=ssqrt_trans)
 #'
 #' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 #'   geom_point() + 
