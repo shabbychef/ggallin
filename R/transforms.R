@@ -34,7 +34,7 @@
 #'
 #'
 #' @keywords plotting
-#' @seealso \code{\link{scales::trans_new}}.
+#' @seealso \code{\link[scales]{trans_new}}.
 #' @return 
 #' A scale transformation object.
 #'

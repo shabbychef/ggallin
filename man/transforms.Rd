@@ -86,7 +86,7 @@ ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) +
 
 }
 \seealso{
-\code{\link{scales::trans_new}}.
+\code{\link[scales]{trans_new}}.
 
 \url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}
 }
