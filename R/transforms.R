@@ -83,6 +83,8 @@ pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',
 #' for \code{interp_trans} or \code{x} and \code{w} for
 #' \code{warp_trans}. If \code{data} is given, it takes precedence over
 #' the given \code{x, y, w}.
+#' @param na.rm If \code{TRUE}, then missing \code{x} or \code{y} will
+#' be removed.
 #' 
 #' @export
 #' @rdname transforms

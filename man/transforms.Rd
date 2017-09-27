@@ -27,6 +27,9 @@ for \code{interp_trans} or \code{x} and \code{w} for
 \code{warp_trans}. If \code{data} is given, it takes precedence over
 the given \code{x, y, w}.}
 
+\item{na.rm}{If \code{TRUE}, then missing \code{x} or \code{y} will
+be removed.}
+
 \item{w}{the \eqn{w} coordinates for the \sQuote{warp} interpolation.
 The cumulative sum of \code{w} are computed then fed to the
 interpolation transform.}

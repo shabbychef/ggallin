@@ -107,6 +107,7 @@
 #' geom_cloud(steps=15,max_alpha=0.85) +
 #' labs(title='uncertainty by cloudr')
 #' @importFrom grid gList
+#' @importFrom stats approxfun dnorm uniroot
 library(ggplot2)
 library(grid)
 
