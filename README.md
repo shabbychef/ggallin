@@ -8,7 +8,7 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/ggallin?color=green)](http://www.r-pkg.org/pkg/ggallin)
 [![Total](http://cranlogs.r-pkg.org/badges/grand-total/ggallin?color=green)](http://www.r-pkg.org/pkg/ggallin)
 
-	_If you think I'm into this for the money you're dead wrong because I'm not doing this for the money.  I'm doing it because it lives inside of me._ -- GG Allin
+>	*If you think I'm into this for the money you're dead wrong because I'm not doing this for the money.  I'm doing it because it lives inside of me.* -- GG Allin
 
 A grab bag of _ggplot2_ extensions and hacks.
 
