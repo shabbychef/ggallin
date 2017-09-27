@@ -19,15 +19,24 @@
 #' negative or positive numbers.
 #' \item \code{pseudolog10_trans} an \code{asinh} transformation, which is like
 #' a logarithm, but appropriate for negative or positive numbers.
+#' \item \code{interp_trans} a function which generates a transform. The
+#' user must supply \eqn{x} and \eqn{y}; the output transform performs the
+#' linear interpolation from \eqn{x} to \eqn{y}. So, for example, to 
+#' achieve something like a square root scale, let \eqn{x} span the domain
+#' of interest and let \eqn{y = \sqrt{x}}.
+#' \item \code{warp_trans} a function which generates a transform. This
+#' is similar to \code{interp_trans}, but it accepts an \eqn{x} and 
+#' non-negative \eqn{w} (\sQuote{weights}) which give the 
+#' \emph{rate} of increase.  The data are resorted along \eqn{x}, 
+#' then the cumulative sum of the \eqn{w} are computed and used as \eqn{y}
+#' in linear interpolation via \code{interp_trans}.
 #' }
 #'
 #'
-#' @param ... arguments passed on to ...
-#' Invalid arguments will result in return value \code{NaN} with a warning.
 #' @keywords plotting
-#' @seealso ...
+#' @seealso \code{\link{scales::trans_new}}.
 #' @return 
-#' foo
+#' A scale transformation object.
 #'
 #' @examples 
 #' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + geom_point() + scale_x_continuous(trans=ssqrt_trans)
@@ -38,7 +47,19 @@
 #'
 #' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 #'   geom_point() + 
-#'   scale_x_continuous(trans=warp_trans(x=seq(-10,10,by=1),y=runif(21)))
+#'   scale_x_continuous(trans=warp_trans(x=seq(-10,10,by=1),w=runif(21)))
+#'
+#' # equivalently:
+#' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+#'   geom_point() + 
+#'   scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=runif(21))))
+#'
+#' # this is like trans_sqrt:
+#' myx <- seq(0,5,by=0.01)
+#' ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+#'   geom_point() + 
+#'   scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
+#'
 #' @author Steven E. Pav \email{steven@@gilgamath.com}
 #' @rdname transforms
 #' @export
@@ -56,9 +77,26 @@ pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',
 																			 domain    = c(-Inf,Inf))
 
 
+#' @param x  the \eqn{x} coordinates for linear interpolation. 
+#' @param y  the \eqn{y} coordinates for linear interpolation. 
+#' @param data  A \code{data.frame} with columns of \code{x} and \code{y}
+#' for \code{interp_trans} or \code{x} and \code{w} for
+#' \code{warp_trans}. If \code{data} is given, it takes precedence over
+#' the given \code{x, y, w}.
+#' 
 #' @export
 #' @rdname transforms
-interp_trans <- function(x,y,na.rm=TRUE) {
+interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE) {
+	if (!is.null(x) && is.data.frame(x) && is.null(y) && is.null(data)) {
+		# wrong order!
+		data <- x
+		x <- NULL
+	}
+	if (!is.null(data) && is.data.frame(data)) {
+		stopifnot(all(c('x','y') %in% colnames(data)))
+		x <- data$x
+		y <- data$y
+	}
 	if (na.rm) {
 		okxy <- !(is.na(x) | is.na(y))
 		x <- x[okxy]
@@ -73,9 +111,22 @@ interp_trans <- function(x,y,na.rm=TRUE) {
 										domain    = domain)
 }
 
+#' @param w  the \eqn{w} coordinates for the \sQuote{warp} interpolation.
+#' The cumulative sum of \code{w} are computed then fed to the
+#' interpolation transform.
 #' @export
 #' @rdname transforms
-warp_trans <- function(x,w,na.rm=TRUE) {
+warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE) {
+	if (!is.null(x) && is.data.frame(x) && is.null(w) && is.null(data)) {
+		# wrong order!
+		data <- x
+		x <- NULL
+	}
+	if (!is.null(data) && is.data.frame(data)) {
+		stopifnot(all(c('x','w') %in% colnames(data)))
+		x <- data$x
+		w <- data$w
+	}
 	if (na.rm) {
 		okxy <- !(is.na(x) | is.na(w))
 		x <- x[okxy]

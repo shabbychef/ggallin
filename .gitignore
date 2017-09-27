@@ -1,0 +1,22 @@
+# for testing, ignore these
+
+# dev stuff
+.tags
+.R_tags
+.*.swp
+.*.swo
+
+*.so
+*.o
+
+ggallin.Rcheck
+ggallin*tar.gz
+ggallin*crancheck
+ggallin
+.docker_img
+cache
+.drat_*
+
+.check_tmp
+
+.ggallin_*.installed
