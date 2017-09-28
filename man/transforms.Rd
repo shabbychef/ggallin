@@ -91,7 +91,7 @@ ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) +
 \url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}
 }
 \author{
-Steven E. Pav \email{steven@gilgamath.com}
+Steven E. Pav \email{shabbychef@gmail.com}
 }
 \keyword{datasets}
 \keyword{plotting}

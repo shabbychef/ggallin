@@ -34,6 +34,7 @@
 #' GNU Lesser General Public License for more details.
 #'
 #' @name ggallin-package
+#' @template etc
 #' @rdname ggallin-package
 #' @docType package
 #' @keywords package
