@@ -34,6 +34,15 @@ a Gaussian density with that standard deviation, plotting a cloud
 (based on \code{geom_ribbon}) with alpha proportional to the density.
 This appears as a vertical \sQuote{cloud} of uncertainty. In use,
 this geom should be comparable to \code{geom_errorbar}.
+
+A sample output from \code{geom_cloud}:
+
+\if{html}{
+\figure{geom_cloud-1.png}{options: width="100\%" alt="Figure: geom_cloud-1.png"}
+}
+\if{latex}{
+\figure{geom_cloud-1.png}{options: width=10cm}
+}
 }
 \note{
 This is a thin wrapper on the \code{geom_ribbon} geom.
@@ -79,7 +88,7 @@ labs(title='uncertainty by cloudr')
 \code{\link[ggplot2]{geom_ribbon}}: The underlying geom
 }
 \author{
-Steven E. Pav \email{steven@gilgamath.com}
+Steven E. Pav \email{shabbychef@gmail.com}
 }
 \keyword{internal}
 \keyword{plotting}

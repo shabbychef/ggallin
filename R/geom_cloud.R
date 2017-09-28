@@ -15,7 +15,7 @@
 
 # Created: 2017.09.24
 # Copyright: Steven E. Pav, 2017
-# Author: Steven E. Pav <steven@gilgamath.com>
+# Author: Steven E. Pav <shabbychef@gmail.com>
 # Comments: Steven E. Pav
 
 # get points equally spaced in density 
@@ -63,6 +63,15 @@
 #' This appears as a vertical \sQuote{cloud} of uncertainty. In use,
 #' this geom should be comparable to \code{geom_errorbar}.
 #'
+#' A sample output from \code{geom_cloud}:
+#'
+#' \if{html}{
+#' \figure{geom_cloud-1.png}{options: width="100\%" alt="Figure: geom_cloud-1.png"}
+#' }
+#' \if{latex}{
+#' \figure{geom_cloud-1.png}{options: width=10cm}
+#' }
+#'
 #' @inheritParams ggplot2::geom_ribbon
 #' @param steps The integer number of steps, or equivalently, the number of
 #'        overlapping ribbons. A larger number makes a smoother cloud
@@ -80,7 +89,7 @@
 #'  \code{\link[ggplot2]{geom_ribbon}}: The underlying geom
 #' @note
 #' This is a thin wrapper on the \code{geom_ribbon} geom.
-#' @author Steven E. Pav \email{steven@@gilgamath.com}
+#' @template etc
 #' @export
 #' @name geom_cloud
 #' @rdname geom_cloud

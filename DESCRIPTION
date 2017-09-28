@@ -3,8 +3,8 @@ Type: Package
 Maintainer: Steven E. Pav <shabbychef@gmail.com>
 Authors@R: c(person(c("Steven", "E."), "Pav", role=c("aut","cre"), 
     email="shabbychef@gmail.com"))
-Version: 0.1.0.0001
-Date: 2017-09-26
+Version: 0.1.0.0002
+Date: 2017-09-27
 License: LGPL-3
 Title: Fast Robust Moments
 BugReports: https://github.com/shabbychef/ggallin/issues
@@ -22,4 +22,5 @@ URL: https://github.com/shabbychef/ggallin
 VignetteBuilder: knitr
 Collate:
     'geom_cloud.R'
+    'ggallin.R'
     'transforms.R'

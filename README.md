@@ -8,7 +8,7 @@
 [![Downloads](http://cranlogs.r-pkg.org/badges/ggallin?color=green)](http://www.r-pkg.org/pkg/ggallin)
 [![Total](http://cranlogs.r-pkg.org/badges/grand-total/ggallin?color=green)](http://www.r-pkg.org/pkg/ggallin)
 
-	_If you think I'm into this for the money you're dead wrong because I'm not doing this for the money.  I'm doing it because it lives inside of me._ -- GG Allin
+>	*If you think I'm into this for the money you're dead wrong because I'm not doing this for the money.  I'm doing it because it lives inside of me.* -- GG Allin
 
 A grab bag of _ggplot2_ extensions and hacks.
 
@@ -68,5 +68,91 @@ ph <- mydat %>% mutate(y = y + offs, ymin = ymin +
 print(ph)
 ```
 
-<img src="tools/figure/geom_cloud-1.png" title="plot of chunk geom_cloud" alt="plot of chunk geom_cloud" width="600px" height="500px" />
+<img src="man/figures/geom_cloud-1.png" title="plot of chunk geom_cloud" alt="plot of chunk geom_cloud" width="600px" height="500px" />
+
+## log-like transforms
+
+The square root transform is a good compromise between raw and logarithmic
+scales, showing detail across different scales without over-emphasizing very
+small variation. However, it does not work for negative numbers. Thus
+a signed square root transform is useful. Along similar lines, the 
+[pseudo-log transform](http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/)
+accepts negative numbers while providing a good view across magnitudes.
+Some illustrations:
+
+
+```r
+library(ggplot2)
+library(ggallin)
+library(dplyr)
+
+nobs <- 100
+
+# this is a silly example, don't blame me
+set.seed(1234)
+mydat <- data.frame(x = rnorm(nobs), z = rnorm(nobs)) %>% 
+    mutate(y = sign(z) * exp(x + z - 2))
+ph <- mydat %>% ggplot(aes(x = x, y = y)) + geom_line() + 
+    scale_y_continuous(trans = ssqrt_trans)
+print(ph)
+```
+
+<img src="man/figures/loglike_trans-1.png" title="plot of chunk loglike_trans" alt="plot of chunk loglike_trans" width="600px" height="500px" />
+
+```r
+ph <- mydat %>% ggplot(aes(x = x, y = y)) + geom_line() + 
+    scale_y_continuous(trans = pseudolog10_trans)
+print(ph)
+```
+
+<img src="man/figures/loglike_trans-2.png" title="plot of chunk loglike_trans" alt="plot of chunk loglike_trans" width="600px" height="500px" />
+
+## interpolated transforms
+
+Scale transforms are useful for 'straightening out' crooked data graphically.
+Sometimes these transforms can not be expressed functionally but instead rely
+on data. In this case we can imagine that we have some paired data that
+provide the transformation _x -> y_. We provide a scale transformation that
+
+
+```r
+library(ggplot2)
+library(ggallin)
+library(dplyr)
+library(aqfb.data)
+
+data(dvix)
+data(dff4)
+
+rr_to_nav <- function(x) {
+    exp(cumsum(log(1 + x)))
+}
+
+
+rets <- dff4 %>% as.data.frame() %>% tibble::rownames_to_column(var = "date") %>% 
+    inner_join(dvix %>% as.data.frame() %>% setNames(c("VIX")) %>% 
+        tibble::rownames_to_column(var = "date"), by = "date") %>% 
+    mutate(date = as.Date(date, format = "%Y-%m-%d")) %>% 
+    mutate(UMD_nav = rr_to_nav(0.01 * UMD), SMB_nav = rr_to_nav(0.01 * 
+        SMB), HML_nav = rr_to_nav(0.01 * HML))
+
+# hmmmm
+ph <- rets %>% ggplot(aes(x = date, y = UMD_nav)) + 
+    geom_line() + labs(y = "UMD cumulative return") + 
+    labs(x = "regular date scale")
+print(ph)
+```
+
+<img src="man/figures/interp_trans-1.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
+
+```r
+ph <- rets %>% ggplot(aes(x = date, y = UMD_nav)) + 
+    geom_line() + scale_x_continuous(trans = warp_trans(x = rets$date, 
+    w = rets$VIX)) + labs(y = "UMD cumulative return") + 
+    labs(x = "warped date scale")
+print(ph)
+```
+
+<img src="man/figures/interp_trans-2.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
+
 
