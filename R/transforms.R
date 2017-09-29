@@ -75,6 +75,11 @@
 #'   geom_point() + 
 #'   scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
 #'
+#' # compose transformatins with %of%:
+#' ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
+#'   geom_point() + 
+#'   scale_y_continuous(trans=scales::reverse_trans() %of% scales::log10_trans())
+#'
 #' @template etc
 #' @rdname transforms
 #' @export
@@ -100,10 +105,11 @@ pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',
 #' the given \code{x, y, w}.
 #' @param na.rm If \code{TRUE}, then missing \code{x} or \code{y} will
 #' be removed.
+#' @inheritParams scales::trans_new
 #' 
 #' @export
 #' @rdname transforms
-interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE) {
+interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL) {
 	if (!is.null(x) && is.data.frame(x) && is.null(y) && is.null(data)) {
 		# wrong order!
 		data <- x
@@ -119,12 +125,29 @@ interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE) {
 		x <- x[okxy]
 		y <- y[okxy]
 	}
-	tfun <- approxfun(x=x,y=y,method='linear',rule=2)
-	ifun <- approxfun(x=y,y=x,method='linear',rule=2)
-	domain <- c(min(x),max(x))
+	afun <- approxfun(x=y,y=x,method='linear',rule=2)
+	datex <- ('Date' %in% class(x))
+
+	if (datex) {
+		tfun <- approxfun(x=as.numeric(x),y=y,method='linear',rule=2)
+		transfo <- function(x) tfun(as.numeric(x))
+	} else {
+		transfo <- approxfun(x=x,y=y,method='linear',rule=2)
+	}
+	if (datex) {
+		ifun <- function(y) { as.Date(afun(y),origin=as.POSIXct('1970-01-01',tz='UTC')) }
+	} else {
+		ifun <- afun
+	}
+
+	domain <- c(min(as.numeric(x)),max(as.numeric(x)))
+	if (is.null(breaks)) { breaks <- scales::trans_breaks(transfo,afun) }
+	if (is.null(format)) { format <- scales::format_format() }
 	scales::trans_new(name      = 'interpolated scale',
-										transform = function(x) tfun(x),
-										inverse   = function(y) ifun(y),
+										transform = transfo,
+										inverse   = ifun,
+										breaks    = breaks,
+										format    = format,
 										domain    = domain)
 }
 
@@ -133,7 +156,7 @@ interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE) {
 #' interpolation transform.
 #' @export
 #' @rdname transforms
-warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE) {
+warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL) {
 	if (!is.null(x) && is.data.frame(x) && is.null(w) && is.null(data)) {
 		# wrong order!
 		data <- x
@@ -155,7 +178,27 @@ warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE) {
 		x <- xx$x
 		w <- w[xx$ix]
 	}
-	interp_trans(x=x,y=cumsum(w),na.rm=na.rm)
+	interp_trans(x=x,y=cumsum(w),na.rm=na.rm,breaks=breaks,format=format)
+}
+
+#' @param atrans a transformation object
+#' @param btrans a transformation object
+#' @usage atrans \%of\% btrans 
+#' @return a transformation object that perfroms \code{atrans} on the output of
+#' \code{btrans}
+#' @export
+#' @rdname transforms
+`%of%` <- function(atrans,btrans) {
+	awise_domain <- btrans$inverse(atrans$domain)
+	bwise_domain <- btrans$domain
+	domain <- c(max(min(awise_domain),min(bwise_domain)),
+							min(max(awise_domain),max(bwise_domain)))
+	scales::trans_new(name      = paste(atrans$name,'of',btrans$name),
+										transform = function(x) atrans$transform(btrans$transform(x)),
+										inverse   = function(y) btrans$inverse(atrans$inverse(y)),
+										breaks    = btrans$breaks,
+										format    = btrans$format,
+										domain    = domain)
 }
 
 #for vim modeline: (do not edit)
