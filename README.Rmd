@@ -25,7 +25,7 @@ opts_chunk$set(fig.width=7,fig.height=6,dpi=100,out.width='700px',out.height='60
 # for text wrapping:
 options(width=124,digits=2)
 opts_chunk$set(size="small")
-opts_chunk$set(tidy=TRUE,tidy.opts=list(width.cutoff=50,keep.blank.line=TRUE))
+opts_chunk$set(tidy=FALSE,tidy.opts=list(width.cutoff=50,keep.blank.line=TRUE))
 library(ggplot2)
 library(ggallin)
 library(dplyr)
@@ -160,6 +160,7 @@ library(ggplot2)
 library(ggallin)
 library(dplyr)
 library(aqfb.data)
+library(scales)
 
 data(dvix)
 data(dff4)
@@ -187,12 +188,33 @@ ph <- rets %>%
 	labs(x='regular date scale')
 print(ph)
 
+# select breaks automagically
 ph <- rets %>%
 	ggplot(aes(x=date,y=UMD_nav)) +
 	geom_line() + 
 	scale_x_continuous(trans=warp_trans(x=rets$date,w=rets$VIX)) +
 	labs(y='UMD cumulative return') + 
 	labs(x='warped date scale')
+print(ph)
+
+# force decade breaks:
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() + 
+	scale_x_continuous(trans=warp_trans(x=rets$date,w=rets$VIX,
+																			breaks=scales::date_breaks('10 years'),
+																			format=scales::date_format('%Y'))) +
+	labs(y='UMD cumulative return') + 
+	labs(x='warped date scale')
+print(ph)
+
+# reverse scale as well (see composition of transforms)
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() + 
+	scale_x_continuous(trans=scales::reverse_trans() %of% warp_trans(x=rets$date,w=rets$VIX)) +
+	labs(y='UMD cumulative return') + 
+	labs(x='reversed, warped date scale')
 print(ph)
 ```
 

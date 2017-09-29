@@ -23,7 +23,8 @@ from github:
 
 
 ```r
-# via CRAN: (not yet) install.packages('ggallin')
+# via CRAN: (not yet)
+# install.packages("ggallin")
 # via drat:
 if (require(drat)) {
     drat:::add("shabbychef")
@@ -31,7 +32,7 @@ if (require(drat)) {
 }
 # get snapshot from github (may be buggy)
 if (require(devtools)) {
-    install_github("shabbychef/ggallin")
+	install_github('shabbychef/ggallin')
 }
 ```
 
@@ -50,21 +51,23 @@ library(dplyr)
 nobs <- 1000
 
 set.seed(2134)
-mydat <- data.frame(grp = sample(c(0, 1), nobs, replace = TRUE), 
-    colfac = sample(letters[1:2], nobs, replace = TRUE), 
-    rowfac = sample(letters[10 + (1:3)], nobs, replace = TRUE)) %>% 
-    mutate(x = seq(0, 1, length.out = nobs) + 0.33 * 
-        grp) %>% mutate(y = 0.25 * rnorm(nobs) + 2 * 
-    grp) %>% mutate(grp = factor(grp)) %>% mutate(se = sqrt(x)) %>% 
-    mutate(ymin = y - se, ymax = y + se)
+mydat <- data.frame(grp=sample(c(0,1),nobs,replace=TRUE),
+										colfac=sample(letters[1:2],nobs,replace=TRUE),
+										rowfac=sample(letters[10 + (1:3)],nobs,replace=TRUE)) %>%
+	mutate(x=seq(0,1,length.out=nobs) + 0.33 * grp) %>%
+	mutate(y=0.25*rnorm(nobs) + 2*grp) %>%
+	mutate(grp=factor(grp)) %>%
+	mutate(se=sqrt(x)) %>%
+	mutate(ymin=y-se,ymax=y+se)
 
 offs <- 2
-ph <- mydat %>% mutate(y = y + offs, ymin = ymin + 
-    offs, ymax = ymax + offs) %>% ggplot(aes(x = x, 
-    y = y, ymin = ymin, ymax = ymax, color = grp, fill = grp)) + 
-    facet_grid(rowfac ~ colfac) + scale_y_sqrt() + 
-    geom_line() + geom_cloud(aes(fill = grp), steps = 15, 
-    max_alpha = 0.85, color = NA) + labs(title = "geom cloud")
+ph <- mydat %>%
+	mutate(y=y+offs,ymin=ymin+offs,ymax=ymax+offs) %>%
+	ggplot(aes(x=x,y=y,ymin=ymin,ymax=ymax,color=grp,fill=grp)) + 
+	facet_grid(rowfac ~ colfac) +
+	scale_y_sqrt() + geom_line() + 
+	geom_cloud(aes(fill=grp),steps=15,max_alpha=0.85,color=NA) +   
+	labs(title='geom cloud')
 print(ph)
 ```
 
@@ -90,18 +93,22 @@ nobs <- 100
 
 # this is a silly example, don't blame me
 set.seed(1234)
-mydat <- data.frame(x = rnorm(nobs), z = rnorm(nobs)) %>% 
-    mutate(y = sign(z) * exp(x + z - 2))
-ph <- mydat %>% ggplot(aes(x = x, y = y)) + geom_line() + 
-    scale_y_continuous(trans = ssqrt_trans)
+mydat <- data.frame(x=rnorm(nobs),z=rnorm(nobs)) %>%
+		mutate(y=sign(z) * exp(x+z-2)) 
+ph <- mydat %>%
+	ggplot(aes(x=x,y=y)) + 
+	geom_line() + 
+	scale_y_continuous(trans=ssqrt_trans)
 print(ph)
 ```
 
 <img src="man/figures/loglike_trans-1.png" title="plot of chunk loglike_trans" alt="plot of chunk loglike_trans" width="600px" height="500px" />
 
 ```r
-ph <- mydat %>% ggplot(aes(x = x, y = y)) + geom_line() + 
-    scale_y_continuous(trans = pseudolog10_trans)
+ph <- mydat %>%
+	ggplot(aes(x=x,y=y)) + 
+	geom_line() + 
+	scale_y_continuous(trans=pseudolog10_trans)
 print(ph)
 ```
 
@@ -128,38 +135,77 @@ library(ggplot2)
 library(ggallin)
 library(dplyr)
 library(aqfb.data)
+library(scales)
 
 data(dvix)
 data(dff4)
 
 rr_to_nav <- function(x) {
-    exp(cumsum(log(1 + x)))
+	exp(cumsum(log(1 + x)))
 }
 
-rets <- dff4 %>% as.data.frame() %>% tibble::rownames_to_column(var = "date") %>% 
-    inner_join(dvix %>% as.data.frame() %>% setNames(c("VIX")) %>% 
-        tibble::rownames_to_column(var = "date"), by = "date") %>% 
-    mutate(date = as.Date(date, format = "%Y-%m-%d")) %>% 
-    mutate(UMD_nav = rr_to_nav(0.01 * UMD), SMB_nav = rr_to_nav(0.01 * 
-        SMB), HML_nav = rr_to_nav(0.01 * HML))
+rets <- dff4 %>%
+		as.data.frame() %>%
+		tibble::rownames_to_column(var='date') %>%
+		inner_join(dvix %>%
+			as.data.frame() %>%
+			setNames(c('VIX')) %>%
+			tibble::rownames_to_column(var='date'),by='date') %>%
+		mutate(date=as.Date(date,format='%Y-%m-%d')) %>%
+		mutate(UMD_nav=rr_to_nav(0.01*UMD),
+					 SMB_nav=rr_to_nav(0.01*SMB),
+					 HML_nav=rr_to_nav(0.01*HML))
 
-ph <- rets %>% ggplot(aes(x = date, y = UMD_nav)) + 
-    geom_line() + labs(y = "UMD cumulative return") + 
-    labs(x = "regular date scale")
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() +
+	labs(y='UMD cumulative return') + 
+	labs(x='regular date scale')
 print(ph)
 ```
 
 <img src="man/figures/interp_trans-1.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
 
 ```r
-ph <- rets %>% ggplot(aes(x = date, y = UMD_nav)) + 
-    geom_line() + scale_x_continuous(trans = warp_trans(x = rets$date, 
-    w = rets$VIX)) + labs(y = "UMD cumulative return") + 
-    labs(x = "warped date scale")
+# select breaks automagically
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() + 
+	scale_x_continuous(trans=warp_trans(x=rets$date,w=rets$VIX)) +
+	labs(y='UMD cumulative return') + 
+	labs(x='warped date scale')
 print(ph)
 ```
 
 <img src="man/figures/interp_trans-2.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
+
+```r
+# force decade breaks:
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() + 
+	scale_x_continuous(trans=warp_trans(x=rets$date,w=rets$VIX,
+																			breaks=scales::date_breaks('10 years'),
+																			format=scales::date_format('%Y'))) +
+	labs(y='UMD cumulative return') + 
+	labs(x='warped date scale')
+print(ph)
+```
+
+<img src="man/figures/interp_trans-3.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
+
+```r
+# reverse scale as well (see composition of transforms)
+ph <- rets %>%
+	ggplot(aes(x=date,y=UMD_nav)) +
+	geom_line() + 
+	scale_x_continuous(trans=scales::reverse_trans() %of% warp_trans(x=rets$date,w=rets$VIX)) +
+	labs(y='UMD cumulative return') + 
+	labs(x='reversed, warped date scale')
+print(ph)
+```
+
+<img src="man/figures/interp_trans-4.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
 
 ## composition of transforms
 
@@ -171,19 +217,12 @@ is most useful for composing reverse scales with other transforms:
 library(ggplot2)
 library(ggallin)
 
-# reverse and log scale
+#  reverse and log scale
 set.seed(1234)
-ph <- ggplot(data.frame(x = rnorm(100), y = exp(rnorm(100, 
-    mean = -2, sd = 4))), aes(x = x, y = y)) + geom_point() + 
-    scale_y_continuous(trans = scales::reverse_trans() %of% 
-        scales::log10_trans()) + labs(title = "reversed and log scaled y")
-```
-
-```
-## Error in inherits(x, "trans"): could not find function "%of%"
-```
-
-```r
+ph <- ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
+	geom_point() + 
+	scale_y_continuous(trans=scales::reverse_trans() %of% scales::log10_trans()) +
+	labs(title='reversed and log scaled y')
 print(ph)
 ```
 
