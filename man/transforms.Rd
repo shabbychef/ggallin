@@ -14,13 +14,11 @@ ssqrt_trans
 
 pseudolog10_trans
 
-interp_trans(x = NULL, y = NULL, data = NULL, na.rm = TRUE,
-  breaks = NULL, format = NULL)
+interp_trans(x=NULL,y=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL)
 
-warp_trans(x = NULL, w = NULL, data = NULL, na.rm = TRUE,
-  breaks = NULL, format = NULL)
+warp_trans(x=NULL,w=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL)
 
-atrans \\\%of\\\% btrans
+atrans \%of\% btrans
 }
 \arguments{
 \item{x}{the \eqn{x} coordinates for linear interpolation.}

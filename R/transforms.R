@@ -106,6 +106,7 @@ pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',
 #' @param na.rm If \code{TRUE}, then missing \code{x} or \code{y} will
 #' be removed.
 #' @inheritParams scales::trans_new
+#' @usage interp_trans(x=NULL,y=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL)
 #' 
 #' @export
 #' @rdname transforms
@@ -154,6 +155,7 @@ interp_trans <- function(x=NULL,y=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=N
 #' @param w  the \eqn{w} coordinates for the \sQuote{warp} interpolation.
 #' The cumulative sum of \code{w} are computed then fed to the
 #' interpolation transform.
+#' @usage warp_trans(x=NULL,w=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL) 
 #' @export
 #' @rdname transforms
 warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NULL) {
@@ -183,10 +185,10 @@ warp_trans <- function(x=NULL,w=NULL,data=NULL,na.rm=TRUE,breaks=NULL,format=NUL
 
 #' @param atrans a transformation object
 #' @param btrans a transformation object
-#' @usage atrans \%of\% btrans 
 #' @return a transformation object that perfroms \code{atrans} on the output of
 #' \code{btrans}
 #' @export
+#' @usage atrans %of% btrans
 #' @rdname transforms
 `%of%` <- function(atrans,btrans) {
 	awise_domain <- btrans$inverse(atrans$domain)
