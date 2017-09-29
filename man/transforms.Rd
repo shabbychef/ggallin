@@ -6,6 +6,7 @@
 \alias{pseudolog10_trans}
 \alias{interp_trans}
 \alias{warp_trans}
+\alias{\%of\%}
 \title{transforms .}
 \format{An object of class \code{trans} of length 6.}
 \usage{
@@ -13,9 +14,13 @@ ssqrt_trans
 
 pseudolog10_trans
 
-interp_trans(x = NULL, y = NULL, data = NULL, na.rm = TRUE)
+interp_trans(x = NULL, y = NULL, data = NULL, na.rm = TRUE,
+  breaks = NULL, format = NULL)
 
-warp_trans(x = NULL, w = NULL, data = NULL, na.rm = TRUE)
+warp_trans(x = NULL, w = NULL, data = NULL, na.rm = TRUE,
+  breaks = NULL, format = NULL)
+
+atrans \\\%of\\\% btrans
 }
 \arguments{
 \item{x}{the \eqn{x} coordinates for linear interpolation.}
@@ -30,12 +35,25 @@ the given \code{x, y, w}.}
 \item{na.rm}{If \code{TRUE}, then missing \code{x} or \code{y} will
 be removed.}
 
+\item{breaks}{default breaks function for this transformation. The breaks
+function is applied to the raw data.}
+
+\item{format}{default format for this transformation. The format is applied
+to breaks generated to the raw data.}
+
 \item{w}{the \eqn{w} coordinates for the \sQuote{warp} interpolation.
 The cumulative sum of \code{w} are computed then fed to the
 interpolation transform.}
+
+\item{atrans}{a transformation object}
+
+\item{btrans}{a transformation object}
 }
 \value{
 A scale transformation object.
+
+a transformation object that perfroms \code{atrans} on the output of
+\code{btrans}
 }
 \description{
 Various scale transformations.
@@ -83,6 +101,11 @@ myx <- seq(0,5,by=0.01)
 ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
   geom_point() + 
   scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
+
+# compose transformatins with \%of\%:
+ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
+  geom_point() + 
+  scale_y_continuous(trans=scales::reverse_trans() \%of\% scales::log10_trans())
 
 }
 \seealso{

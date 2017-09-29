@@ -113,6 +113,14 @@ Scale transforms are useful for 'straightening out' crooked data graphically.
 Sometimes these transforms can not be expressed functionally but instead rely
 on data. In this case we can imagine that we have some paired data that
 provide the transformation _x -> y_. We provide a scale transformation that
+supports linear interpolation. 
+We also provide another scale transformation that accepts _x_ and positive 'weights'
+_w_, and computes _y_ by taking the cumulative sum of weights, called a 'warp'
+transformation. 
+
+Here we illustrate the warp transformation by plotting the cumulative return of
+the 'UMD' factor against a time scale that is uniform in cumulative daily VIX
+(whatever that means):
 
 
 ```r
@@ -128,7 +136,6 @@ rr_to_nav <- function(x) {
     exp(cumsum(log(1 + x)))
 }
 
-
 rets <- dff4 %>% as.data.frame() %>% tibble::rownames_to_column(var = "date") %>% 
     inner_join(dvix %>% as.data.frame() %>% setNames(c("VIX")) %>% 
         tibble::rownames_to_column(var = "date"), by = "date") %>% 
@@ -136,7 +143,6 @@ rets <- dff4 %>% as.data.frame() %>% tibble::rownames_to_column(var = "date") %>
     mutate(UMD_nav = rr_to_nav(0.01 * UMD), SMB_nav = rr_to_nav(0.01 * 
         SMB), HML_nav = rr_to_nav(0.01 * HML))
 
-# hmmmm
 ph <- rets %>% ggplot(aes(x = date, y = UMD_nav)) + 
     geom_line() + labs(y = "UMD cumulative return") + 
     labs(x = "regular date scale")
@@ -154,5 +160,33 @@ print(ph)
 ```
 
 <img src="man/figures/interp_trans-2.png" title="plot of chunk interp_trans" alt="plot of chunk interp_trans" width="600px" height="500px" />
+
+## composition of transforms
+
+The `%of%` binary operator supports composition of scale transformations. This
+is most useful for composing reverse scales with other transforms:
+
+
+```r
+library(ggplot2)
+library(ggallin)
+
+# reverse and log scale
+set.seed(1234)
+ph <- ggplot(data.frame(x = rnorm(100), y = exp(rnorm(100, 
+    mean = -2, sd = 4))), aes(x = x, y = y)) + geom_point() + 
+    scale_y_continuous(trans = scales::reverse_trans() %of% 
+        scales::log10_trans()) + labs(title = "reversed and log scaled y")
+```
+
+```
+## Error in inherits(x, "trans"): could not find function "%of%"
+```
+
+```r
+print(ph)
+```
+
+<img src="man/figures/compose_trans-1.png" title="plot of chunk compose_trans" alt="plot of chunk compose_trans" width="600px" height="500px" />
 
 
