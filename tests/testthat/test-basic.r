@@ -81,13 +81,36 @@ test_that("basic usage",{#FOLDUP
 #UNFOLD
 
 context("interpolation transforms work")#FOLDUP
-test_that("basic usage",{#FOLDUP
+test_that("interp trans",{#FOLDUP
 	set.char.seed("75745a61-3841-4e19-8fff-9e5781945182")
 
 	set.seed(1234)
 	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=interp_trans(x=seq(-10,10,by=1),y=cumsum(runif(21))))
+
+	set.seed(1234)
+	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_x_continuous(trans=interp_trans(data=data.frame(x=seq(-10,10,by=1),y=cumsum(runif(21)))))
+
+	set.seed(1234)
+	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_x_continuous(trans=interp_trans(data.frame(x=seq(-10,10,by=1),y=cumsum(runif(21)))))
+
+	# this is like trans_sqrt:
+	set.seed(1234)
+	myx <- seq(0,5,by=0.01)
+	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
+
+	# sentinel
+	expect_true(TRUE)
+})#UNFOLD
+test_that("warp trans",{#FOLDUP
+	set.char.seed("421d6cc8-70cc-4a03-90ac-97c58e9bfa5b")
 
 	set.seed(1234)
 	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
@@ -100,12 +123,17 @@ test_that("basic usage",{#FOLDUP
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=runif(21))))
 
-	# this is like trans_sqrt:
+	# negatives ok
 	set.seed(1234)
-	myx <- seq(0,5,by=0.01)
 	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
-		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
+		scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=-runif(21))))
+
+	# equivalently:
+	set.seed(1234)
+	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_x_continuous(trans=warp_trans(data.frame(x=seq(-10,10,by=1),w=runif(21))))
 
 	# sentinel
 	expect_true(TRUE)
