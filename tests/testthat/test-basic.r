@@ -148,6 +148,12 @@ test_that("warp trans",{#FOLDUP
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data.frame(x=seq(-10,10,by=1),w=runif(21))))
 
+	# try warp trans on dates !
+	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
+	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_y_continuous(trans=warp_trans(x=myx,w=0.1*sqrt(seq_along(myx))))
+
 	# sentinel
 	expect_true(TRUE)
 })#UNFOLD
@@ -161,6 +167,12 @@ test_that("basic usage",{#FOLDUP
 	ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=scales::reverse_trans() %of% scales::log10_trans())
+
+	# reverse a warp trans on dates
+	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
+	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_y_continuous(trans=scales::reverse_trans() %of% warp_trans(x=myx,w=0.1*sqrt(seq_along(myx))))
 
 	# sentinel
 	expect_true(TRUE)
