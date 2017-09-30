@@ -106,6 +106,13 @@ test_that("interp trans",{#FOLDUP
 		geom_point() + 
 		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
 
+	# try interp trans on dates !
+	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
+	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(seq_along(myx))))
+	
+
 	# sentinel
 	expect_true(TRUE)
 })#UNFOLD
@@ -128,6 +135,12 @@ test_that("warp trans",{#FOLDUP
 	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=-runif(21))))
+
+	# not sorted x
+	set.seed(1234)
+	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+		geom_point() + 
+		scale_x_continuous(trans=warp_trans(data=data.frame(x=rev(seq(-10,10,by=1)),w=runif(21))))
 
 	# equivalently:
 	set.seed(1234)
