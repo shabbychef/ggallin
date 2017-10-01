@@ -3,12 +3,14 @@ Type: Package
 Maintainer: Steven E. Pav <shabbychef@gmail.com>
 Authors@R: c(person(c("Steven", "E."), "Pav", role=c("aut","cre"), 
     email="shabbychef@gmail.com"))
-Version: 0.1.1.0001
-Date: 2017-09-30
+Version: 0.1.1
+Date: 2017-10-01
 License: LGPL-3
-Title: Grab Bag of ggplot2 Functions
+Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/ggallin/issues
-Description: Extra geoms and scales for ggplot2.
+Description: Extra geoms and scales for ggplot2, including 'geom_cloud',
+  'ssqrt_trans', 'pseudolog10_trans', 'interp_trans', 'warp_trans',
+  and an infix compose operator for scale transforms.
 Depends:
   ggplot2 (>= 2.2.1)
 Suggests:

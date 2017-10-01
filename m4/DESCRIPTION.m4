@@ -10,9 +10,11 @@ Authors@R: c(person(c("Steven", "E."), "Pav", role=c("aut","cre"),
 Version: VERSION()
 Date: DATE()
 License: LGPL-3
-Title: Grab Bag of ggplot2 Functions
+Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/PKG_NAME()/issues
-Description: Extra geoms and scales for ggplot2.
+Description: Extra geoms and scales for ggplot2, including 'geom_cloud',
+  'ssqrt_trans', 'pseudolog10_trans', 'interp_trans', 'warp_trans',
+  and an infix compose operator for scale transforms.
 Depends:
   ggplot2 (>= 2.2.1)
 Suggests:
