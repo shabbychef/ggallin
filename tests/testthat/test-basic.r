@@ -36,9 +36,15 @@ set.char.seed <- function(str) {
 library(ggplot2)
 library(scales)
 
+# setup
+tmpf <- tempfile(fileext='.png')
+#cat('printing to ',tmpf,'\n')
+png(tmpf)
+
 context("geom_cloud runs")#FOLDUP
 test_that("basic usage",{#FOLDUP
 	set.char.seed("b78cd6ea-03b8-4346-a23f-3190bafcd74e")
+
 	set.seed(2134)
 	nobs <- 200
 	mydat <- data.frame(grp=sample(c(0,1),nobs,replace=TRUE),
@@ -49,17 +55,19 @@ test_that("basic usage",{#FOLDUP
 	mydat$grp <- factor(mydat$grp)
 	mydat$se  <- sqrt(mydat$x)
 
-	ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,color=grp)) +
-	facet_grid(rowfac ~ colfac) + 
-	geom_line() + 
-	geom_errorbar() + 
-	labs(title='uncertainty by errorbar')
+	ph <- ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,color=grp)) +
+		facet_grid(rowfac ~ colfac) + 
+		geom_line() + 
+		geom_errorbar() + 
+		labs(title='uncertainty by errorbar')
+	print(ph)
 
-	ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,fill=grp)) +
-	facet_grid(rowfac ~ colfac) + 
-	geom_line() + 
-	geom_cloud(steps=15,max_alpha=0.85) +
-	labs(title='uncertainty by cloudr')
+	ph <- ggplot(mydat,aes(x=x,y=y,ymin=y-se,ymax=y+se,fill=grp)) +
+		facet_grid(rowfac ~ colfac) + 
+		geom_line() + 
+		geom_cloud(steps=15,max_alpha=0.85) +
+		labs(title='uncertainty by cloudr')
+	print(ph)
 	# sentinel
 	expect_true(TRUE)
 })#UNFOLD
@@ -68,13 +76,16 @@ test_that("basic usage",{#FOLDUP
 context("misc transforms work")#FOLDUP
 test_that("basic usage",{#FOLDUP
 	set.char.seed("5ad1ee23-bd0b-4b08-ac77-0d2addcbed7d")
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=ssqrt_trans)
+	print(ph)
 
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=pseudolog10_trans)
+	print(ph)
 	# sentinel
 	expect_true(TRUE)
 })#UNFOLD
@@ -85,32 +96,37 @@ test_that("interp trans",{#FOLDUP
 	set.char.seed("75745a61-3841-4e19-8fff-9e5781945182")
 
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=interp_trans(x=seq(-10,10,by=1),y=cumsum(runif(21))))
+	print(ph)
 
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=interp_trans(data=data.frame(x=seq(-10,10,by=1),y=cumsum(runif(21)))))
+	print(ph)
 
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=interp_trans(data.frame(x=seq(-10,10,by=1),y=cumsum(runif(21)))))
+	print(ph)
 
 	# this is like trans_sqrt:
 	set.seed(1234)
 	myx <- seq(0,5,by=0.01)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(myx)))
+	print(ph)
 
 	# try interp trans on dates !
 	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
-	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=interp_trans(x=myx,y=sqrt(seq_along(myx))))
+	print(ph)
 	
 
 	# sentinel
@@ -120,39 +136,45 @@ test_that("warp trans",{#FOLDUP
 	set.char.seed("421d6cc8-70cc-4a03-90ac-97c58e9bfa5b")
 
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(x=seq(-10,10,by=1),w=runif(21)))
+	print(ph)
 
 	# equivalently:
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=runif(21))))
+	print(ph)
 
 	# negatives ok
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data=data.frame(x=seq(-10,10,by=1),w=-runif(21))))
+	print(ph)
 
 	# not sorted x
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data=data.frame(x=rev(seq(-10,10,by=1)),w=runif(21))))
+	print(ph)
 
 	# equivalently:
 	set.seed(1234)
-	ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_x_continuous(trans=warp_trans(data.frame(x=seq(-10,10,by=1),w=runif(21))))
+	print(ph)
 
 	# try warp trans on dates !
 	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
-	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=warp_trans(x=myx,w=0.1*sqrt(seq_along(myx))))
+	print(ph)
 
 	# sentinel
 	expect_true(TRUE)
@@ -164,22 +186,26 @@ test_that("basic usage",{#FOLDUP
 	set.char.seed("f8c79fa5-680c-41b0-8dd6-e337b315cd08")
 
 	# compose transformatins with %of%:
-	ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=rnorm(100),y=exp(rnorm(100,mean=-2,sd=4))),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=scales::reverse_trans() %of% scales::log10_trans())
+	print(ph)
 
 	# reverse a warp trans on dates
 	myx <- as.Date(seq(0,1000,by=1),origin='1970-01-01')
-	ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
+	ph <- ggplot(data.frame(x=myx[1:100],y=runif(100)),aes(x=x,y=y)) + 
 		geom_point() + 
 		scale_y_continuous(trans=scales::reverse_trans() %of% warp_trans(x=myx,w=0.1*sqrt(seq_along(myx))))
+	print(ph)
 
 	# sentinel
 	expect_true(TRUE)
 })#UNFOLD
 #UNFOLD
 
-
+# teardown:
+dev.off()
+unlink(tmpf)
 
 #for vim modeline: (do not edit)
 # vim:ts=2:sw=2:tw=79:fdm=marker:fmr=FOLDUP,UNFOLD:cms=#%s:syn=r:ft=r:ai:si:cin:nu:fo=croql:cino=p0t0c5(0:
