@@ -10,7 +10,7 @@ Authors@R: c(person(c("Steven", "E."), "Pav", role=c("aut","cre"),
 Version: VERSION()
 Date: DATE()
 License: LGPL-3
-Title: Fast Robust Moments
+Title: Grab Bag of ggplot2 Functions
 BugReports: https://github.com/shabbychef/PKG_NAME()/issues
 Description: Extra geoms and scales for ggplot2.
 Depends:
