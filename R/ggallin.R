@@ -50,7 +50,7 @@ NULL
 #' \newcommand{\cranggallin}{\CRANpkg{ggallin}}
 #' \newcommand{\ggallin}{\href{https://github.com/shabbychef/ggallin}}
 #'
-#' @section \ggallin{} Version 0.1.1 (2017-09-28) :
+#' @section \ggallin{} Version 0.1.1 (2017-10-01) :
 #' \itemize{
 #' \item submit to CRAN
 #' }

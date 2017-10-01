@@ -23,7 +23,7 @@ Imports:
   grid
 RoxygenNote: 5.0.1
 URL: https://github.com/shabbychef/PKG_NAME()
-VignetteBuilder: knitr
+dnl VignetteBuilder: knitr
 Collate:
 m4_R_FILES()
 dnl vim:ts=2:sw=2:tw=79:syn=m4:ft=m4
