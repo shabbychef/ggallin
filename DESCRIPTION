@@ -8,8 +8,11 @@ Date: 2017-10-01
 License: LGPL-3
 Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/ggallin/issues
-Description: Extra geoms and scales for ggplot2, including 'geom_cloud',
-  'ssqrt_trans', 'pseudolog10_trans', 'interp_trans', 'warp_trans',
+Description: Extra geoms and scales for 'ggplot2', including geom_cloud(),
+  a Normal density cloud replacement for errorbars;
+  transforms ssqrt_trans and pseudolog10_trans, which are loglike but 
+  appropriate for negative data; interp_trans() and warp_trans() which
+  provide scale transforms based on interpolation;
   and an infix compose operator for scale transforms.
 Depends:
   ggplot2 (>= 2.2.1)
