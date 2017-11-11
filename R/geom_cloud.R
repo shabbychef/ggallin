@@ -141,7 +141,8 @@ geom_cloud <- function(mapping = NULL, data = NULL, ...,
 }
 
 
-#' @rdname geom_cloud-proto
+#' ggallin ggproto objects
+#' @rdname ggallin-ggproto
 #' @format NULL
 #' @usage NULL
 #' @keywords internal
