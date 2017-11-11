@@ -66,10 +66,10 @@
 #' A sample output from \code{geom_cloud}:
 #'
 #' \if{html}{
-#' \figure{geom_cloud-1.png}{options: width="100\%" alt="Figure: geom_cloud-1.png"}
+#' \figure{geomcloud-1.png}{options: width="100\%" alt="Figure: geomcloud-1.png"}
 #' }
 #' \if{latex}{
-#' \figure{geom_cloud-1.png}{options: width=10cm}
+#' \figure{geomcloud-1.png}{options: width=10cm}
 #' }
 #'
 #' @inheritParams ggplot2::geom_ribbon
@@ -90,7 +90,6 @@
 #' @note
 #' This is a thin wrapper on the \code{geom_ribbon} geom.
 #' @template etc
-#' @export
 #' @name geom_cloud
 #' @rdname geom_cloud
 #' @examples
@@ -118,9 +117,7 @@
 #' @importFrom grid gList
 #' @importFrom ggplot2 layer
 #' @importFrom stats approxfun dnorm uniroot
-library(ggplot2)
-library(grid)
-
+#' @export
 geom_cloud <- function(mapping = NULL, data = NULL, ...,
 											 na.rm = TRUE,
 											 steps = 7, se_mult=1, max_alpha=1,
@@ -144,8 +141,7 @@ geom_cloud <- function(mapping = NULL, data = NULL, ...,
 }
 
 
-#' Geom Proto
-#' @rdname geom_cloud
+#' @rdname geom_cloud-proto
 #' @format NULL
 #' @usage NULL
 #' @keywords internal

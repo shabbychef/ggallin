@@ -20,3 +20,4 @@ cache
 .check_tmp
 
 .ggallin_*.installed
+.Rd2pdf*/
