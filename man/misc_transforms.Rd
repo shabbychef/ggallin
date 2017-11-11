@@ -5,7 +5,7 @@
 \alias{ssqrt_trans}
 \alias{pseudolog10_trans}
 \title{Various scale transforms.}
-\format{An object of class \code{trans} of length 7.}
+\format{An object of class \code{trans} of length 6.}
 \usage{
 ssqrt_trans
 

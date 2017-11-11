@@ -71,7 +71,7 @@ ph <- mydat %>%
 print(ph)
 ```
 
-<img src="man/figures/geom_cloud-1.png" title="plot of chunk geom_cloud" alt="plot of chunk geom_cloud" width="600px" height="500px" />
+<img src="man/figures/geomcloud-1.png" title="plot of chunk geomcloud" alt="plot of chunk geomcloud" width="600px" height="500px" />
 
 ## log-like transforms
 

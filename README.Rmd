@@ -78,7 +78,7 @@ This `geom` acts nearly as a drop-in replacement for `geom_errorbar`,
 converting `ymin` and `ymax` into 'clouds' of uncertainty with alpha
 proportional to normal density. 
 
-```{r geom_cloud,cache=TRUE,eval=TRUE,echo=TRUE,dpi=200,out.width='600px',out.height='500px'}
+```{r geomcloud,cache=TRUE,eval=TRUE,echo=TRUE,dpi=200,out.width='600px',out.height='500px'}
 library(ggplot2)
 library(ggallin)
 library(dplyr)
