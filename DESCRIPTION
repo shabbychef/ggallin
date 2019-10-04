@@ -1,10 +1,12 @@
 Package: ggallin
 Type: Package
 Maintainer: Steven E. Pav <shabbychef@gmail.com>
-Authors@R: c(person(c("Steven", "E."), "Pav", role=c("aut","cre"), 
-    email="shabbychef@gmail.com"))
-Version: 0.1.1.0001
-Date: 2017-11-10
+Authors@R: c(person(c("Steven", "E."), "Pav", 
+    role=c("aut","cre"),
+    email="shabbychef@gmail.com",
+    comment = c(ORCID = "0000-0002-4197-6195")))
+Version: 0.1.1.0002
+Date: 2019-10-03
 License: LGPL-3
 Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/ggallin/issues
@@ -22,7 +24,7 @@ Suggests:
 Imports:
   scales,
   grid
-RoxygenNote: 6.0.1
+RoxygenNote: 5.0.1
 URL: https://github.com/shabbychef/ggallin
 Collate:
     'geom_cloud.R'
