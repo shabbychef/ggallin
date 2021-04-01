@@ -11,7 +11,7 @@ VMAJOR 						 = 0
 VMINOR 						 = 1
 VPATCH  					 = 1
 #VDEV 							 = 
-VDEV 							 = .0002
+VDEV 							 = .1001
 PKG_NAME 					:= ggallin
 
 RPKG_USES_RCPP 		:= 1
