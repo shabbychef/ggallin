@@ -32,3 +32,4 @@ libs
 nohup.out
 Rd2.pdf
 .Rd2pdf*
+^\.github$
