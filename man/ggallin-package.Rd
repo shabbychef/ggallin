@@ -2,6 +2,7 @@
 % Please edit documentation in R/ggallin.R
 \docType{package}
 \name{ggallin-package}
+\alias{ggallin}
 \alias{ggallin-package}
 \title{Grab Bag of GGplot2 Functions.}
 \description{
@@ -18,7 +19,18 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/shabbychef/ggallin}
+  \item Report bugs at \url{https://github.com/shabbychef/ggallin/issues}
+}
+
+}
 \author{
 Steven E. Pav \email{shabbychef@gmail.com}
+
+\strong{Maintainer}: Steven E. Pav \email{shabbychef@gmail.com} (\href{https://orcid.org/0000-0002-4197-6195}{ORCID})
+
 }
 \keyword{package}

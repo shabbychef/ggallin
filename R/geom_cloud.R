@@ -66,7 +66,7 @@
 #' A sample output from \code{geom_cloud}:
 #'
 #' \if{html}{
-#' \figure{geomcloud-1.png}{options: width="100\%" alt="Figure: geomcloud-1.png"}
+#' \figure{geomcloud-1.png}{options: style="width: 100\%" alt="Figure: geomcloud-1.png"}
 #' }
 #' \if{latex}{
 #' \figure{geomcloud-1.png}{options: width=10cm}

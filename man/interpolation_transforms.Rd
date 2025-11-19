@@ -23,10 +23,10 @@ the given \code{x, y, w}.}
 be removed.}
 
 \item{breaks}{default breaks function for this transformation. The breaks
-function is applied to the raw data.}
+function is applied to the un-transformed data.}
 
 \item{format}{default format for this transformation. The format is applied
-to breaks generated to the raw data.}
+to breaks generated on the un-transformed data.}
 
 \item{w}{the \eqn{w} coordinates for the \sQuote{warp} interpolation.
 The cumulative sum of \code{w} are computed then fed to the
