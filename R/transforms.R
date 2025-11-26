@@ -33,7 +33,7 @@
 #' \item \code{pseudolog10_trans} an \code{asinh} transformation, which is like
 #' a logarithm, but appropriate for negative or positive numbers.  This
 #' transformation was taken from the Win Vector blog, 
-#' \url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}.
+#' \url{https://win-vector.com/2012/03/01/modeling-trick-the-signed-pseudo-logarithm/}.
 #' }
 #'
 #' @keywords plotting
@@ -60,7 +60,7 @@ ssqrt_trans <- scales::trans_new(name      = 'signed square root',
 																 inverse   = function(y) sign(y) * y^2,
 																 domain    = c(-Inf,Inf))
 
-#' @seealso \url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}
+#' @seealso \url{https://win-vector.com/2012/03/01/modeling-trick-the-signed-pseudo-logarithm/}
 #' @export
 #' @rdname misc_transforms
 pseudolog10_trans <- scales::trans_new(name      = 'pseudo log10',
