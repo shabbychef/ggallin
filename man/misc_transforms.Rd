@@ -5,7 +5,11 @@
 \alias{ssqrt_trans}
 \alias{pseudolog10_trans}
 \title{Various scale transforms.}
-\format{An object of class \code{trans} of length 7.}
+\format{
+An object of class \code{transform} of length 9.
+
+An object of class \code{transform} of length 9.
+}
 \usage{
 ssqrt_trans
 
@@ -25,7 +29,7 @@ negative or positive numbers.
 \item \code{pseudolog10_trans} an \code{asinh} transformation, which is like
 a logarithm, but appropriate for negative or positive numbers.  This
 transformation was taken from the Win Vector blog, 
-\url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}.
+\url{https://win-vector.com/2012/03/01/modeling-trick-the-signed-pseudo-logarithm/}.
 }
 }
 \examples{
@@ -43,7 +47,7 @@ ggplot(data.frame(x=rnorm(100),y=runif(100)),aes(x=x,y=y)) +
 \seealso{
 \code{\link[scales]{trans_new}}.
 
-\url{http://www.win-vector.com/blog/2012/03/modeling-trick-the-signed-pseudo-logarithm/}
+\url{https://win-vector.com/2012/03/01/modeling-trick-the-signed-pseudo-logarithm/}
 }
 \author{
 Steven E. Pav \email{shabbychef@gmail.com}

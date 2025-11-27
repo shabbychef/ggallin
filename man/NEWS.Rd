@@ -10,6 +10,13 @@ News for package 'ggallin'
 \newcommand{\cranggallin}{\CRANpkg{ggallin}}
 \newcommand{\ggallin}{\href{https://github.com/shabbychef/ggallin}}
 }
+\section{\ggallin{} Version 0.1.2 (2025-11-26) }{
+
+\itemize{
+\item fixing figure width styling for CRAN
+}
+}
+
 \section{\ggallin{} Version 0.1.1 (2017-10-01) }{
 
 \itemize{

@@ -5,8 +5,8 @@ Authors@R: c(person(c("Steven", "E."), "Pav",
     role=c("aut","cre"),
     email="shabbychef@gmail.com",
     comment = c(ORCID = "0000-0002-4197-6195")))
-Version: 0.1.1.1001
-Date: 2019-11-17
+Version: 0.1.2.001
+Date: 2025-11-27
 License: LGPL-3
 Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/ggallin/issues
