@@ -5,8 +5,8 @@ Authors@R: c(person(c("Steven", "E."), "Pav",
     role=c("aut","cre"),
     email="shabbychef@gmail.com",
     comment = c(ORCID = "0000-0002-4197-6195")))
-Version: 0.1.2.001
-Date: 2025-11-27
+Version: 0.1.2
+Date: 2025-11-18
 License: LGPL-3
 Title: Grab Bag of 'ggplot2' Functions
 BugReports: https://github.com/shabbychef/ggallin/issues
@@ -24,10 +24,9 @@ Suggests:
 Imports:
   scales,
   grid
-RoxygenNote: 5.0.1
+RoxygenNote: 7.3.2
 URL: https://github.com/shabbychef/ggallin
 Collate:
     'geom_cloud.R'
     'ggallin.R'
-    'stat_subqq.R'
     'transforms.R'

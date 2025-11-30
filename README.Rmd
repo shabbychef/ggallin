@@ -40,7 +40,6 @@ library(microbenchmark)
 # ggallin
 
 [![Build Status](https://github.com/shabbychef/ggallin/workflows/R-CMD-check/badge.svg)](https://github.com/shabbychef/ggallin/actions)
-[![codecov.io](https://codecov.io/github/shabbychef/ggallin/coverage.svg?branch=master)](https://codecov.io/github/shabbychef/ggallin?branch=master)
 [![CRAN](https://www.r-pkg.org/badges/version/ggallin)](https://cran.r-project.org/package=ggallin)
 [![Downloads](http://cranlogs.r-pkg.org/badges/ggallin?color=green)](https://www.r-pkg.org:443/pkg/ggallin)
 [![Total](http://cranlogs.r-pkg.org/badges/grand-total/ggallin?color=green)](https://www.r-pkg.org:443/pkg/ggallin)

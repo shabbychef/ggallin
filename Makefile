@@ -10,7 +10,7 @@
 VMAJOR 						 = 0
 VMINOR 						 = 1
 VPATCH  					 = 2
-VDEV 							 = .001
+VDEV 							 = 
 #VDEV 							 = .0003
 PKG_NAME 					:= ggallin
 
