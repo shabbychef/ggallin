@@ -2,10 +2,12 @@
 
 export("%of%")
 export(GeomCloud)
+export(GeomSubQQ)
 export(geom_cloud)
 export(interp_trans)
 export(pseudolog10_trans)
 export(ssqrt_trans)
+export(stat_subqq)
 export(warp_trans)
 importFrom(ggplot2,layer)
 importFrom(grid,gList)

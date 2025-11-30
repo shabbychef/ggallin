@@ -24,7 +24,7 @@ Suggests:
 Imports:
   scales,
   grid
-RoxygenNote: 5.0.1
+RoxygenNote: 7.3.2
 URL: https://github.com/shabbychef/ggallin
 Collate:
     'geom_cloud.R'
